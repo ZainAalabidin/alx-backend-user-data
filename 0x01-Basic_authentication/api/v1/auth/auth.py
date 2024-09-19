@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """ authentication model """
+
 from flask import request
 from typing import List, TypeVar
 import fnmatch
 
 
 class Auth:
+    """ Class to manage the API authentication """
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """ Method for validating if endpoint requires auth """
         if path is None or excluded_paths is None or excluded_paths == []:
