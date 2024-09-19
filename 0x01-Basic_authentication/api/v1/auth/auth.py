@@ -8,6 +8,7 @@ import fnmatch
 class Auth:
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """ determines if authentication is required for the given path. """
+
         if path is None:
             return True
         if excluded_paths is None or not excluded_paths:
@@ -21,6 +22,7 @@ class Auth:
         """ Method to get authorization """
         if request is not None:
             return request.headers.get("Authorization", None)
+
         return None
 
     def current_user(self, request=None) -> TypeVar('User'):
