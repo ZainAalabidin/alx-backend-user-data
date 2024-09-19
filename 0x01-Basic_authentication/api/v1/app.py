@@ -9,6 +9,7 @@ from api.v1.auth.basic_auth import BasicAuth
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 import os
+import json
 
 
 app = Flask(__name__)
@@ -33,7 +34,8 @@ def not_found(error) -> str:
 @app.errorhandler(401)
 def unauthorized_error(error) -> str:
     """ Unauthorized handler """
-    return jsonify({"error": "Unauthorized"}), 401
+    response = json.dumps({"error": "Unauthorized"}, separators=(',', ':'))
+    return response, 401, {'Content-Type': 'application/json'}
 
 
 @app.errorhandler(403)
