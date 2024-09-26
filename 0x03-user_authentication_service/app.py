@@ -93,7 +93,15 @@ def get_reset_password_token():
 
 @app.route("/reset_password", methods=["PUT"])
 def update_password():
-    """ update password endpoint. """
+    """ update password endpoint.
+        Form fields:
+            - email
+            - reset_token
+            - new_password
+        Return:
+            - user email and password message JSON represented
+            - 403 if reset token is not provided or not linked to any user
+    """
     email = request.form.get("email")
     reset_token = request.form.get("reset_token")
     new_password = request.form.get("new_password")
