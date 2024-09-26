@@ -5,6 +5,7 @@ from flask import Flask, jsonify, request, abort, redirect, url_for
 from auth import Auth
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 AUTH = Auth()
 
 
@@ -60,13 +61,14 @@ def logout():
 
 
 @app.route("/profile", methods=["GET"])
-def profile():
+def profile() -> str:
     """ access user data using session_id
         Return:
             - user email JSON represented
             - 403 if session_id is not linked to any user
     """
     session_id = request.cookies.get("session_id")
+    user = AUTH.get_user_from_session_id(session_id)
     if not user:
         abort(403)
     return jsonify({"email": user.email})
